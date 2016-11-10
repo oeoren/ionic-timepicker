@@ -3,16 +3,18 @@ angular.module('ionic-timepicker.provider', [])
   .provider('ionicTimePicker', function () {
 
     var config = {
+      titleLabel: 'TimePicker',
       setLabel: 'Set',
       closeLabel: 'Close',
-      inputTime: (((new Date()).getHours() * 60 * 60) + ((new Date()).getMinutes() * 60)),
+      nowLabel: 'Now',
+      inputTime: 0, // (((new Date()).getHours() * 60 * 60) + ((new Date()).getMinutes() * 60)),
       format: 12,
       step: 15
     };
 
     this.configTimePicker = function (inputObj) {
       angular.extend(config, inputObj);
-    };
+    }; 
 
     this.$get = ['$rootScope', '$ionicPopup', function ($rootScope, $ionicPopup) {
 
@@ -100,7 +102,7 @@ angular.module('ionic-timepicker.provider', [])
         }
 
         if ($scope.time.hours === 0) {
-          $scope.time.hours = 12;
+          // $scope.time.hours = 12;
         }
 
         $scope.time.minutes = rem / 60;
@@ -121,7 +123,7 @@ angular.module('ionic-timepicker.provider', [])
         var buttons = [];
         $scope.mainObj = angular.extend({}, config, ipObj);
         setMinSecs($scope.mainObj.inputTime, $scope.mainObj.format);
-
+        $scope.time.titleLabel = ipObj.titleLabel;
         buttons.push({
           text: $scope.mainObj.setLabel,
           type: 'button_set',
@@ -139,6 +141,15 @@ angular.module('ionic-timepicker.provider', [])
             } else {
               totalSec = ($scope.time.hours * 60 * 60) + ($scope.time.minutes * 60);
             }
+            $scope.mainObj.callback(totalSec);
+          }
+        });
+
+        buttons.push({
+          text: $scope.mainObj.nowLabel,
+          type: 'button_now',
+          onTap: function (e) {
+            var totalSec = (((new Date()).getHours() * 60 * 60) + ((new Date()).getMinutes() * 60));
             $scope.mainObj.callback(totalSec);
           }
         });

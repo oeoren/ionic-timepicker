@@ -59,7 +59,7 @@ For example, you might change some of the default colors:
 .ionic_timepicker_popup .overflowShow {
   white-space: normal !important;
 }
-.ionic_timepicker_popup .button_set, .ionic_timepicker_popup .button_close {
-  background-color: #009688;
+.ionic_timepicker_popup .button_set, .ionic_timepicker_popup .button_close .button_now {
+  background-color: #dddddd; /* #009688;*/
   color: #ffffff;
 }
